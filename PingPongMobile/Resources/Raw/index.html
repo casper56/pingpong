@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Pong 桌球遊戲</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/site.css" />
+    <link rel="stylesheet" href="css/pong.css" />
+    <style>
+        /* Mobile adjustments */
+        body {
+            padding-bottom: 0;
+            overflow: hidden; /* Prevent scrolling if possible */
+        }
+        .container {
+            padding: 10px;
+            max-width: 100%;
+        }
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            max-width: 100%;
+            border: 2px solid #333;
+            background-color: #000;
+        }
+        .game-controls {
+            margin-bottom: 10px;
+        }
+        /* Hide navbar for mobile app feel */
+        header, footer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container game-container">
+        <div class="game-header">
+            <h1 class="h3">Pong 桌球遊戲</h1>
+        </div>
+
+        <div class="game-controls text-center">
+            <button id="btnStart" class="btn btn-primary btn-sm">開始遊戲</button>
+            <button id="btnPause" class="btn btn-warning btn-sm" disabled>暫停</button>
+            <div class="speed-control mt-2">
+                <label for="rangeSpeed">速度:</label>
+                <input type="range" id="rangeSpeed" min="5" max="30" value="12" step="1">
+                <span id="speedValue">12</span>
+            </div>
+        </div>
+
+        <div class="canvas-wrapper" style="position: relative;">
+            <canvas id="pongCanvas" width="350" height="600"></canvas>
+            <div id="gameResult" class="overlay-message" style="display:none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 24px; font-weight: bold; text-shadow: 2px 2px 4px #000;"></div>
+        </div>
+
+        <div class="instructions mt-2 small text-muted text-center">
+            <p>點擊畫面左右移動球拍</p>
+        </div>
+    </div>
+
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/site.js"></script>
+    <script src="js/pong.js"></script>
+    <script>
+        // Adjust canvas size for mobile logic if needed
+        // For now, we rely on CSS max-width, but internally the game uses 500x800.
+        // We might want to make it responsive in JS, but let's stick to the existing JS logic.
+        // The existing JS relies on mousemove/touch.
+        // We need to ensure touch events work for the paddle.
+        
+        const canvas = document.getElementById('pongCanvas');
+        const playerPaddle = { width: 100 }; // Mock for scope
+        
+        // Add Touch Support specifically if missing in pong.js (pong.js had mousemove)
+        // Let's inspect pong.js content again mentally: it had 'mousemove'.
+        // We should add touchmove support here to be safe without editing pong.js directly if possible,
+        // or we just rely on the user update.
+        // Actually, let's append a small touch handler here.
+        
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // Prevent scrolling
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            const mouseX = touch.clientX - rect.left;
+            
+            // We need to update the playerPaddle.x in the global scope defined in pong.js.
+            // But pong.js variables are local to its DOMContentLoaded closure.
+            // We cannot easily access them unless we modify pong.js.
+            // However, mousemove works on desktop. On mobile, we can simulate mousemove?
+            
+            const mouseEvent = new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }, { passive: false });
+        
+        canvas.addEventListener('touchstart', (e) => {
+             // Dispatch mousemove to jump paddle to finger immediately
+             const touch = e.touches[0];
+             const mouseEvent = new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        });
+    </script>
+</body>
+</html>

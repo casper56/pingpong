@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Pong 桌球遊戲";
+}
+
+<div class="game-container">
+    <div class="game-header">
+        <h1 class="display-4">Pong 桌球遊戲</h1>
+    </div>
+
+    <div class="game-controls">
+        <button id="btnStart" class="btn btn-primary">開始遊戲</button>
+        <button id="btnPause" class="btn btn-warning" disabled>暫停</button>
+        <div class="speed-control">
+            <label for="rangeSpeed">遊戲速度:</label>
+            <input type="range" id="rangeSpeed" min="5" max="30" value="12" step="1">
+            <span id="speedValue">12</span>
+        </div>
+    </div>
+
+    <div class="canvas-wrapper">
+        <canvas id="pongCanvas" width="500" height="800"></canvas>
+        <div id="gameResult" class="overlay-message"></div>
+    </div>
+
+    <div class="instructions">
+        <h3>操作說明</h3>
+        <div class="keys">
+            <p><strong>玩家 (下方):</strong> ← (左) / → (右) 或 <strong>滑鼠移動</strong></p>
+            <p><strong>電腦 (上方):</strong> 自動對戰</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/pong.js"></script>
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/pong.css" />
+}

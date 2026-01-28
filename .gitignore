@@ -1,0 +1,55 @@
+
+# Build Results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userprefs
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Helper files
+*_i.c
+*_p.c
+*_h.h
+*.ilg
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Publish Web Output
+web.config
+*.pubxml
+*.publishproj
