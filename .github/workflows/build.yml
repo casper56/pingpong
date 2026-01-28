@@ -30,3 +30,12 @@ jobs:
 
     - name: Build Android App
       run: dotnet build PingPongMobile/PingPongMobile.csproj -f net10.0-android --no-restore
+
+    - name: Publish Android APK
+      run: dotnet publish PingPongMobile/PingPongMobile.csproj -f net10.0-android -c Release -r android-arm64 -p:AndroidPackageFormat=apk --no-restore
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-apk
+        path: PingPongMobile/bin/Release/net10.0-android/android-arm64/publish/*.apk
